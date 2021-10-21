@@ -164,7 +164,7 @@ class ExportARENAScene(Operator, ExportHelper):
     export_draco_mesh_compression_enable: BoolProperty(
         name="Draco Compression",
         description="Compress mesh using Draco",
-        default=True,
+        default=False,
     )       
 
     filestore_path: StringProperty(
@@ -176,6 +176,7 @@ class ExportARENAScene(Operator, ExportHelper):
            
     def execute(self, context):
         create_folder_if_does_not_exist(self.filepath)
+        self.scene_id = os.path.basename(self.filepath)
         return export_arena_scene(
                     context, 
                     self.scene_id,
