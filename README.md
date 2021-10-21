@@ -18,7 +18,8 @@ The Add-on exports the root objects in a scene into seperate GLTF files and crea
 ## Export
 
 The Add-on exports the root objects in a scene into seperate GLTF files. For example, exporting the folowing scene:
-![image](https://user-images.githubusercontent.com/3504501/138317909-2c7cf0ff-e18f-46be-b892-015a418472b9.png)
+![image](https://user-images.githubusercontent.com/3504501/138322830-0ca41b10-e1bd-4610-aa07-caf02b456e27.png)
+
 
 Will create three GLTF files, one for each of the objects at the root of the scene and a `scene.json` that describes the scene in a format that ARENA can import.
 
