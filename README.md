@@ -38,7 +38,7 @@ Pressing **Export to Folder** will create a folder with the name provided and ou
   
 ![image](https://user-images.githubusercontent.com/3504501/138321649-4c9b835d-5399-48cf-aec7-616b4334b890.png)
 
-** Now, copy the folder output by the exporter to the [ARENA filestore](http://arenaxr.org/files). The location of the files is important as the assets will be assumed to be at this location. At the bottom left of the Blender window you can see a note about where the files should be uploaded to. **
+Now, copy the folder output by the exporter to the [ARENA filestore](http://arenaxr.org/files). **The location of the files is important as the assets will be assumed to be at this location. At the bottom left of the Blender window you can see a note about where the files should be uploaded to.**
   
 ![image](https://user-images.githubusercontent.com/3504501/138322032-e3898cfc-7a2d-4be7-b1dd-5536c63f9d97.png)
 
