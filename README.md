@@ -46,3 +46,42 @@ Now, copy the folder output by the exporter to the [ARENA filestore](http://aren
 
  Finally, go to the [build webpage](https://arenaxr.org/build/) and import the `scene.json` file inside the folder uploaded to the ARENA filestore.
 
+### Export format
+
+The `scene.json` file format is an array of objects as given from a MongoDB dump, similar to  the python [import/export script](https://github.com/conix-center/ARENA-py/tree/master/tools/import-export-scenes):
+```
+[
+   {
+      "_id":{
+         "$oid":"605d0cb6cab49fe1bf55d9c7"
+      },
+      "namespace":"public",
+      "object_id":"lobby-model",
+      "attributes":{
+         "object_type":"gltf-model",
+         "url":"/store/users/wiselab/room_models/lobby/lobby-v2.glb",
+         "position":{
+            "x":0,
+            "y":-2,
+            "z":0
+         },
+         "rotation":{
+            "x":0,
+            "y":0,
+            "z":0,
+            "w":1
+         },
+         "scale":{
+            "x":0.05,
+            "y":0.05,
+            "z":0.05
+         }
+      },
+      "type":"object",
+      "realm":"realm",
+      "sceneId":"lobby"
+   }
+  {...}
+]
+```  
+  
