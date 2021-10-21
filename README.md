@@ -6,8 +6,8 @@ The Add-on exports the root objects in a scene into seperate GLTF files and crea
   
 # Install
 
-1. Download 'blender-arena-export.py'
-2. In Blender, go to Edit -> Preferences. In the **Add-ons** section, use the **Install…** button and Browse the filesystyem to select the 'blender-arena-export.py' add-on file and press **Install**.
+1. Download `blender-arena-export.py`
+2. In Blender, go to Edit -> Preferences. In the **Add-ons** section, use the **Install…** button and Browse the filesystyem to select the `blender-arena-export.py` add-on file and press **Install**.
 3. Once installed, don't forget **to enable the add-on**:
 ![image](https://user-images.githubusercontent.com/3504501/138316257-56ac2bfb-73db-4877-a4d3-cdfaf2138bd6.png)
 4. You can confirm the Add-on is installed by seeing the new menu entry at File -> Export -> Export to ARENA.
@@ -20,7 +20,7 @@ The Add-on exports the root objects in a scene into seperate GLTF files and crea
 The Add-on exports the root objects in a scene into seperate GLTF files. For example, exporting the folowing scene:
 ![image](https://user-images.githubusercontent.com/3504501/138317909-2c7cf0ff-e18f-46be-b892-015a418472b9.png)
 
-Will create three GLTF files, one for each of the objects at the root of the scene and a 'scene.json' that describes the scene in a format that ARENA can import.
+Will create three GLTF files, one for each of the objects at the root of the scene and a `scene.json` that describes the scene in a format that ARENA can import.
 
 Once you have a scene to export, navigate to File -> Export -> Export to ARENA. This will present you with a file browser window to select a folder where the scene files are going to be exported.
 ![image](https://user-images.githubusercontent.com/3504501/138319900-dcb1a377-d987-4777-ae1a-67ed6bd08331.png)
@@ -42,5 +42,5 @@ Pressing **Export to Folder** will create a folder with the name provided and ou
   
 ![image](https://user-images.githubusercontent.com/3504501/138322032-e3898cfc-7a2d-4be7-b1dd-5536c63f9d97.png)
 
- Finally, go to the [build webpage](https://arenaxr.org/build/) and import the 'scene.json' file inside the folder uploaded to the ARENA filestore.
+ Finally, go to the [build webpage](https://arenaxr.org/build/) and import the `scene.json` file inside the folder uploaded to the ARENA filestore.
 
