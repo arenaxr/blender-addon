@@ -29,6 +29,7 @@ Once you have a scene to export, navigate to File -> Export -> Export to ARENA. 
 In this window you have some options to control the ARENA export:
 1. Format: The exported GLTFs format. Can be GLB, single GLTF with all files embedded, or GLTF with seperate (.gltf + .bin + textures) files.
 2. ARENA Username: The ARENA username is used to set path to assets. When this field is edited, the filestore path (option below) is also updated.
+2. ARENA Realm: The ARENA realm to include in the output file (typically not relevant).
 3. Export Selection: Export selected objects only.
 4. Export Animations: Exports active actions and NLA tracks as glTF animations.
 5. Export Extras: Export custom properties as glTF extras.
