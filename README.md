@@ -2,12 +2,12 @@
 
 ARENA Blender add-on to import/export scenes. *For now, only exports.*
 
-The Add-on exports the root objects in a scene into seperate GLTF files and creates a JSON file describing the scene in a format that ARENA can import. The folder created for the exported scene can then be uploaded to [ARENA filestore](http://arenaxr.org/files) (typically at '<filestore-home>/blender-exports/exported-bolder') and imported using the [build webpage](https://arenaxr.org/build/).
+The Add-on exports the root objects in a scene into seperate GLTF files and creates a JSON file describing the scene in a format that ARENA can import. The folder created for the exported scene can then be uploaded to [ARENA filestore](http://arenaxr.org/files) (typically at '<filestore-home>/blender-exports/exported-folder') and imported using the [build webpage](https://arenaxr.org/build/).
   
 # Install
 
 1. Download [`blender-arena-export.py`](https://raw.githubusercontent.com/conix-center/arena-blender-addon/main/blender-arena-export.py)
-2. In Blender, go to Edit -> Preferences. In the **Add-ons** section, use the **Install…** button and Browse the filesystyem to select the `blender-arena-export.py` add-on file and press **Install**.
+2. In Blender, go to Edit -> Preferences. In the **Add-ons** section, use the **Install…** button and Browse the filesystem to select the `blender-arena-export.py` add-on file and press **Install**.
 3. Once installed, don't forget **to enable the add-on**:
 ![image](https://user-images.githubusercontent.com/3504501/138316257-56ac2bfb-73db-4877-a4d3-cdfaf2138bd6.png)
 4. You can confirm the Add-on is installed by seeing the new menu entry at File -> Export -> Export to ARENA.
