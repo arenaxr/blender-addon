@@ -11,14 +11,13 @@ import json
 bl_info = {
     "name": "Export to ARENA (to folder)",
     "author": "Nuno Pereira",
-    "version": (0, 1, 0),
+    "version": (0, 1, 1),
     "blender": (2, 93, 5),
     "location": "File > Export > ARENA Scene (to folder)",
     "description": "Export > ARENA Scene (to folder)",
     "warning": "",
     "category": "Import-Export"
 }
-
 
 def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm, filestore_path, check_existing, export_format, export_selection, export_animations, export_extras, export_draco_mesh_compression_enable):
     print("export... ", filepath)
@@ -76,8 +75,8 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
             "url": f'/store/users/{arena_username}/blender-exports/{scene_id}/{obj_name}.{gltf_ext}',
             "position": {
               "x": saved_loc[0],
-              "y": saved_loc[1],
-              "z": saved_loc[2]
+              "y": saved_loc[2],
+              "z": saved_loc[1]
             },
             "rotation": {
               "x": 0,
@@ -226,5 +225,5 @@ if __name__ == "__main__":
     register()
 
     # test call
-    #bpy.ops.export_arena.scene('INVOKE_DEFAULT')
+    bpy.ops.export_arena.scene('INVOKE_DEFAULT')
 
