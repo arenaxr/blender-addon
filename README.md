@@ -44,8 +44,17 @@ Now, copy the folder output by the exporter to the [ARENA filestore](http://aren
   
 ![image](https://user-images.githubusercontent.com/3504501/138322032-e3898cfc-7a2d-4be7-b1dd-5536c63f9d97.png)
 
- Finally, go to the [build webpage](https://arenaxr.org/build/) and import the `scene.json` file inside the folder uploaded to the ARENA filestore.
+### Import to ARENA
+Finally, go to the [build webpage](https://arenaxr.org/build/) and import the `scene.json` file inside the folder uploaded to the ARENA filestore by pressing the import button:
 
+<img src="https://user-images.githubusercontent.com/3504501/138899495-a3c6c481-21d4-4e38-9e7a-aebc8f580757.png" width="600">
+  
+Then, provide either the full path to the .json file on the filestore (e.g. `/store/users/<username>/blender-exports/untitled-scene/scene.json`), or simply the scene name (e.g. `untitled-scene`) if you placed the exported folder under the default filestore path (`/store/users/<username>/blender-exports/`): 
+
+<img src="https://user-images.githubusercontent.com/3504501/138899694-e1dfbcf6-dfb6-497d-a587-31210b201b2c.png" width="600">
+
+You can choose to either add the scene objects to the current scene in build (the default), or create a new scene.
+  
 ### Export format
 
 The `scene.json` file format is an array of objects as given from a MongoDB dump, similar to  the python [import/export script](https://github.com/conix-center/ARENA-py/tree/master/tools/import-export-scenes):
