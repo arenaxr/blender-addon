@@ -39,10 +39,6 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
     bpy.ops.object.select_all( action = 'SELECT' )
     bpy.ops.object.origin_set( type = 'ORIGIN_GEOMETRY' )
 
-    # apply all transforms
-    bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
-
-    #return {'FINISHED'}
     arena_objects = []
 
     # iterate collections
@@ -58,12 +54,13 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
         for cobj in obj.children: cobj.select_set(True)
         obj.select_set(True)
 
+        obj.rotation_mode = 'QUATERNION'
+
         # save location and rotation and move object to origin
-        saved_loc = mathutils.Vector(obj.matrix_world.to_translation())
-        #saved_rot = object.matrix_world.to_quaternion()
-        # save location and rotation and move object to origin
-        #saved_loc = mathutils.Vector(obj.location)
+        saved_loc = obj.matrix_world.to_translation()
+        saved_rot = obj.matrix_world.to_quaternion()
         obj.location = (0, 0, 0)
+        obj.rotation_quaternion = (1, 0, 0, 0)
 
         bpy.ops.export_scene.gltf(
             filepath=gltf_filepath,
@@ -75,6 +72,7 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
             use_selection = True,
         )
         obj.location = saved_loc
+        obj.rotation_quaternion = saved_rot
 
         arena_objects.append({
           "namespace": arena_username,
@@ -90,12 +88,13 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
             "position": {
               "x": saved_loc[0],
               "y": saved_loc[2],
-              "z": saved_loc[1]
+              "z": saved_loc[1] * -1
             },
             "rotation": {
-              "x": 0,
-              "y": 0,
-              "z": 0,
+              "x": saved_rot[1],
+              "y": saved_rot[3],
+              "z": saved_rot[2],
+              "w": saved_rot[0]
             },
             "scale": {
               "x": 1,
