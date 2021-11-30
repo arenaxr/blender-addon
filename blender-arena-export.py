@@ -3,7 +3,7 @@ from bpy.props import StringProperty, BoolProperty, EnumProperty
 from bpy.types import Operator
 import bpy
 import os
-import re 
+import re
 import uuid
 import mathutils
 import json
@@ -11,7 +11,7 @@ import json
 bl_info = {
     "name": "Export to ARENA (to folder)",
     "author": "Nuno Pereira",
-    "version": (0, 1, 1),
+    "version": (0, 1, 2),
     "blender": (2, 93, 5),
     "location": "File > Export > ARENA Scene (to folder)",
     "description": "Export > ARENA Scene (to folder)",
@@ -29,34 +29,48 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
     if export_selection:
         export_objs = [obj for obj in bpy.context.selected_objects if obj.parent == None]
     else:
-        export_objs = [obj for obj in bpy.context.scene.collection.all_objects if obj.parent == None]        
-        
+        export_objs = [obj for obj in bpy.context.scene.collection.all_objects if obj.parent == None]
+
+    # save file
+    if bpy.data.filepath:
+        bpy.ops.wm.save_as_mainfile(filepath=bpy.data.filepath)
+
+    # move origin to geometry in all objects
+    bpy.ops.object.select_all( action = 'SELECT' )
+    bpy.ops.object.origin_set( type = 'ORIGIN_GEOMETRY' )
+
+    # apply all transforms
+    bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+
     #return {'FINISHED'}
     arena_objects = []
-     
-    # iterate collections   
+
+    # iterate collections
     for obj in export_objs:
         obj_name = re.sub('_+', '_', re.sub('\W', '_', obj.name).lower())
         gltf_filepath = os.path.join(filepath, obj_name)
         print("export... ", gltf_filepath)
-            
+
         # clear selected objects
         bpy.ops.object.select_all(action='DESELECT')
-                
+
         # select object hierarchy
         for cobj in obj.children: cobj.select_set(True)
         obj.select_set(True)
-            
-        # save location and move object to origin
-        saved_loc = mathutils.Vector(obj.location)
+
+        # save location and rotation and move object to origin
+        saved_loc = mathutils.Vector(obj.matrix_world.to_translation())
+        #saved_rot = object.matrix_world.to_quaternion()
+        # save location and rotation and move object to origin
+        #saved_loc = mathutils.Vector(obj.location)
         obj.location = (0, 0, 0)
-        
+
         bpy.ops.export_scene.gltf(
-            filepath=gltf_filepath, 
-            check_existing=check_existing, 
-            export_format=export_format, 
-            export_animations=export_animations, 
-            export_extras=export_extras, 
+            filepath=gltf_filepath,
+            check_existing=check_existing,
+            export_format=export_format,
+            export_animations=export_animations,
+            export_extras=export_extras,
             export_draco_mesh_compression_enable=export_draco_mesh_compression_enable,
             use_selection = True,
         )
@@ -81,7 +95,7 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
             "rotation": {
               "x": 0,
               "y": 0,
-              "z": 0
+              "z": 0,
             },
             "scale": {
               "x": 1,
@@ -90,12 +104,12 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
             }
           }
         })
-                
-    msg = f'Copy folder ({filepath}) to the ARENA filestore at {filestore_path}/{scene_id})' 
+
+    msg = f'Copy folder ({filepath}) to the ARENA filestore at {filestore_path}/{scene_id})'
     show_message_box(title="ARENA Export", icon='INFO', lines=("ARENA Scene Exported",msg))
     context.workspace.status_text_set(f'ARENA Scene Exported. NOTE: {msg}')
-     
-    json_filepath = os.path.join(filepath, 'scene.json') 
+
+    json_filepath = os.path.join(filepath, 'scene.json')
     f = open(json_filepath, 'w', encoding='utf-8')
     f.write(json.dumps(arena_objects))
     f.close()
@@ -104,15 +118,15 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
 
 def username_update(self, context):
     self.filestore_path=f'/store/user/{self.arena_username}/blender-exports'
-        
+
 class ExportARENAScene(Operator, ExportHelper):
     """This appears in the tooltip of the operator and in the generated docs"""
-    bl_idname = "export_arena.scene"  
+    bl_idname = "export_arena.scene"
     bl_label = "Export to Folder"
     bl_options = {'UNDO'}
-   
+
     filename_ext = ''
-    
+
     # List of operator properties
 
     export_format: EnumProperty(
@@ -122,67 +136,67 @@ class ExportARENAScene(Operator, ExportHelper):
             ('GLB', "GLB", "GLB"),
             ('GLTF_EMBEDDED', "GLTF Embedded", "GLTF Embedded"),
             ('GLTF_SEPARATE', "GLTF Seperate", "GLTF Seperate"),
-            
+
         ),
         default='GLB',
     )
-    
+
     arena_username: StringProperty(
         name="ARENA Username",
         description="ARENA Username; Used for the filestore path below (assets uploaded to the filestore)",
         default='wiselab',
         maxlen=100,
         update=username_update
-    )   
-        
+    )
+
     arena_realm: StringProperty(
         name="ARENA Realm",
         description="ARENA Realm; Used to create the json file",
         default='realm',
         maxlen=100
-    )   
-            
+    )
+
     export_selection: BoolProperty(
         name="Export Selection",
         description="Export selected objects only",
         default=False,
     )
-    
+
     export_animations: BoolProperty(
         name="Export Animations",
         description="Exports active actions and NLA tracks as glTF animations",
         default=True,
     )
-    
+
     export_extras: BoolProperty(
         name="Export Extras",
         description="Export custom properties as glTF extras",
         default=True,
-    )    
-    
+    )
+
     export_draco_mesh_compression_enable: BoolProperty(
         name="Draco Compression",
         description="Compress mesh using Draco",
         default=False,
-    )       
+    )
 
     filestore_path: StringProperty(
         name="Filestore Path",
         description="ARENA filestore path to where assets will be uploaded (defaults to <filestore-home>/blender-exports)",
         default='/store/user/wiselab/blender-exports',
         maxlen=300
-    )          
-           
+    )
+
     def execute(self, context):
         create_folder_if_does_not_exist(self.filepath)
         self.scene_id = os.path.basename(self.filepath)
         return export_arena_scene(
-                    context, 
+                    context,
                     self.scene_id,
                     self.filepath,
                     self.arena_username,
                     self.arena_realm,
-                    self.filestore_path, 
+                    self.filestore_path,
                     self.check_existing,
                     self.export_format,
                     self.export_selection,
@@ -190,7 +204,7 @@ class ExportARENAScene(Operator, ExportHelper):
                     self.export_extras,
                     self.export_draco_mesh_compression_enable
                     )
-                    
+
     def invoke(self, context, event):
         self.scene_id = f'untitled-scene'
         self.filepath = self.scene_id
@@ -201,7 +215,7 @@ def create_folder_if_does_not_exist(folder_path):
     if os.path.isdir(folder_path):
         return
     os.mkdir(folder_path)
-    
+
 def show_message_box(title = "Message Box", icon = 'INFO', lines=""):
     myLines=lines
     def draw(self, context):
@@ -226,4 +240,3 @@ if __name__ == "__main__":
 
     # test call
     bpy.ops.export_arena.scene('INVOKE_DEFAULT')
-
