@@ -35,10 +35,6 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
     if bpy.data.filepath:
         bpy.ops.wm.save_as_mainfile(filepath=bpy.data.filepath)
 
-    # move origin to geometry in all objects
-    bpy.ops.object.select_all( action = 'SELECT' )
-    bpy.ops.object.origin_set( type = 'ORIGIN_GEOMETRY' )
-
     arena_objects = []
 
     # iterate collections
@@ -93,7 +89,7 @@ def export_arena_scene(context, scene_id, filepath, arena_username, arena_realm,
             "rotation": {
               "x": saved_rot[1],
               "y": saved_rot[3],
-              "z": saved_rot[2],
+              "z": saved_rot[2] * -1,
               "w": saved_rot[0]
             },
             "scale": {
